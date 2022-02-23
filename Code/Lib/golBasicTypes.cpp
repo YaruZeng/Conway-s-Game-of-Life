@@ -13,7 +13,50 @@
 =============================================================================*/
 
 #include "golBasicTypes.h"
+#include <random>
+#include <stdlib.h> 
+#include <time.h>  
 
-namespace gol {
+namespace gol 
+{
+  Status::Status(const int& rows, const int& columns)
+  {
+    m_rows = rows;
+    m_columns = columns;
+    
+    std::vector<std::string> grid_rows;
+    
+    for(int i=0; i<m_columns; i++)
+    {
+      grid_rows.push_back("-");
+    }
+    for(int j=0; j<m_rows; j++)
+    {
+      m_grid.push_back(grid_rows);
+    }
+  }
+
+  void Status::StatusSet(const int& columns, const int& rows, const std::string& status)
+  {
+    m_grid[columns][rows] = status;
+  }
+
+  std::string Status::StatusGet(const int& columns, const int& rows)
+  {
+    return m_grid[columns][rows];
+  }
+
+  void Status::StatusPrint()
+  {
+    for(int i=0; i<m_rows; i++)
+    {
+      for(int j=0; j<m_columns; j++)
+      {
+        std::cout << m_grid[i][j] << ' ';
+      }
+      std::cout << '\n';
+    }
+    std::cout << std::endl;
+  }
 
 } // end namespace

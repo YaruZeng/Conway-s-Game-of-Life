@@ -14,7 +14,9 @@
 
 #ifndef golBasicTypes_h
 #define golBasicTypes_h
-
+#include <iostream>
+#include <string>
+#include <vector>
 /**
 * \defgroup internal internal
 * \brief Internal stuff, not for end-users.
@@ -44,6 +46,20 @@
 //! Single namespace for all code in this package
 namespace gol
 {
+  class Status
+  {
+    public:
+    Status(const int& columns, const int& rows);
+    void StatusSet(const int& columns, const int& rows, const std::string& status);
+    std::string StatusGet(const int& columns, const int& rows);
+    void StatusPrint();
+
+    int m_columns;
+    int m_rows;
+    int m_alive;
+    std::vector<std::vector<std::string>> m_grid;
+
+  };
 
 } // end namespace
 
