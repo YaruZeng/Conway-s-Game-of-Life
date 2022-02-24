@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <vector>
-#include <map>
+#include <fstream>
 
 TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) {
 
@@ -62,6 +62,81 @@ TEST_CASE( "Test2 for instantiation of class Status", "[Random]" ) {
   REQUIRE(s3.m_columns==7);
   REQUIRE(s3.m_alive==5);
   
+}
+
+TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" ){
+
+  std::string filepath1 = "../testing/data/glider.txt";
+  std::ifstream infile1(filepath1);
+  std::string str1; 
+
+  gol::Status grid1(filepath1);
+
+  int row_cnt1=0;
+  
+  while (getline(infile1, str1))
+  {
+    std::string grid_row = "";
+    for(auto value:grid1.m_grid[row_cnt1])
+    {
+      grid_row += value == 0 ? "-" : "o";
+      grid_row += " ";
+    }
+    grid_row.pop_back();
+    ++row_cnt1;
+
+    REQUIRE(str1==grid_row);
+    
+  }
+
+
+  std::string filepath2 = "../testing/data/still_lifes.txt";
+  std::ifstream infile2(filepath2);
+  std::string str2; 
+
+  gol::Status grid2(filepath2);
+  
+  int row_cnt2=0;
+  
+  while (getline(infile2, str2))
+  {
+    std::string grid_row = "";
+    for(auto value:grid2.m_grid[row_cnt2])
+    {
+      grid_row += value == 0 ? "-" : "o";
+      grid_row += " ";
+    }
+    grid_row.pop_back();
+    ++row_cnt2;
+
+    REQUIRE(str2==grid_row);
+    
+  }
+  
+
+  std::string filepath3 = "../testing/data/oscillators.txt";
+  std::ifstream infile3(filepath3);
+  std::string str3; 
+
+  gol::Status grid3(filepath3);
+  
+  int row_cnt3=0;
+  
+  while (getline(infile3, str3))
+  {
+    std::string grid_row = "";
+    for(auto value:grid3.m_grid[row_cnt3])
+    {
+      grid_row += value == 0 ? "-" : "o";
+      grid_row += " ";
+    }
+    grid_row.pop_back();
+    ++row_cnt3;
+
+    REQUIRE(str3==grid_row);
+    
+  }
+
 }
 
 // TEST_CASE( "My second test", "[some group identifier]" ) {

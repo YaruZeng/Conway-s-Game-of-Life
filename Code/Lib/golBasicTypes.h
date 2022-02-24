@@ -51,14 +51,15 @@ namespace gol
     public:
     Status(const int& columns, const int& rows);
     Status(const int& rows, const int& columns, const int& num_alive);
+    Status(const std::string& filename);
     void StatusSet(const int& columns, const int& rows, const std::string& status);
     std::string StatusGet(const int& columns, const int& rows);
     void StatusPrint();
 
-    int m_columns;
-    int m_rows;
-    int m_alive;
-    std::vector<std::vector<std::string>> m_grid;
+    int m_columns=0;
+    int m_rows=0;
+    int m_alive=0;
+    std::vector<std::vector<int>> m_grid={};
 
   };
 

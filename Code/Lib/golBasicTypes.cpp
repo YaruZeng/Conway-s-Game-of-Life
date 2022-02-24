@@ -11,24 +11,25 @@
   See LICENSE.txt in the top level directory for details.
 
 =============================================================================*/
-
 #include "golBasicTypes.h"
 #include <random>
 #include <stdlib.h> 
 #include <time.h>  
+#include <fstream>
 
 namespace gol 
 {
+  
   Status::Status(const int& rows, const int& columns)
   {
     m_rows = rows;
     m_columns = columns;
     
-    std::vector<std::string> grid_rows;
+    std::vector<int> grid_rows;
     
     for(int i=0; i<m_columns; i++)
     {
-      grid_rows.push_back("-");
+      grid_rows.push_back(0);
     }
     for(int j=0; j<m_rows; j++)
     {
@@ -36,15 +37,16 @@ namespace gol
     }
   }
 
+
   Status::Status(const int& rows, const int& columns, const int& num_alive)
   {
     m_rows = rows;
     m_columns = columns;
-    std::vector<std::string> grid_rows;
+    std::vector<int> grid_rows;
     
     for(int i=0; i<m_columns; i++)
     {
-      grid_rows.push_back("-");
+      grid_rows.push_back(0);
     }
     for(int j=0; j<m_rows; j++)
     {
@@ -63,22 +65,74 @@ namespace gol
       alive_row = rand() % m_rows;
       alive_column = rand() % m_columns;
 
-      if(m_grid[alive_row][alive_column] == "o") continue;
-      m_grid[alive_row][alive_column] = "o";
+      if(m_grid[alive_row][alive_column] == 1) continue;
+      m_grid[alive_row][alive_column] = 1;
       count++;
 
     }
   }
 
-  void Status::StatusSet(const int& columns, const int& rows, const std::string& status)
+
+  Status::Status(const std::string& filepath)
   {
-    m_grid[columns][rows] = status;
+    std::ifstream infile(filepath);
+    std::string s;
+    
+    if (!infile)
+    {
+      std::cout << "Failed to open the file." << std::endl;
+    }
+    else
+    {
+      while (getline(infile, s))
+      {
+        std::vector<int> grid_rows={};
+        int col_count = 0;
+        for(auto value:s)
+        {
+          switch (value)
+          {
+            case '-': 
+            grid_rows.push_back(0);
+            ++col_count;
+            break;
+
+            case 'o': 
+            grid_rows.push_back(1);
+            ++col_count;
+            m_alive++;
+            break;
+          }
+        }
+        m_grid.push_back(grid_rows);
+        m_columns = col_count;
+        m_rows++;
+      }
+      infile.close();
+    }
+
+  }
+  
+
+  void Status::StatusSet(const int& rows, const int& columns, const std::string& status)
+  {
+    if(status=="alive"||"o")
+    {
+      m_grid[rows][columns] = 1;
+    }
+    else if (status=="dead"||"-")
+    {
+      m_grid[rows][columns] = 0;
+    }
+    
   }
 
-  std::string Status::StatusGet(const int& columns, const int& rows)
+
+  std::string Status::StatusGet(const int& rows, const int& columns)
   {
-    return m_grid[columns][rows];
+    return m_grid[rows][columns] == 0 ? "-" : "o";
   }
+
 
   void Status::StatusPrint()
   {
@@ -86,7 +140,8 @@ namespace gol
     {
       for(int j=0; j<m_columns; j++)
       {
-        std::cout << m_grid[i][j] << ' ';
+        std::string status = m_grid[i][j] == 0 ? "-" : "o";
+        std::cout << status << ' ';
       }
       std::cout << '\n';
     }
