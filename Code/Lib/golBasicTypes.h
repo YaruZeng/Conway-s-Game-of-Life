@@ -50,6 +50,7 @@ namespace gol
   {
     public:
     Status(const int& columns, const int& rows);
+    Status(const int& rows, const int& columns, const int& num_alive);
     void StatusSet(const int& columns, const int& rows, const std::string& status);
     std::string StatusGet(const int& columns, const int& rows);
     void StatusPrint();
