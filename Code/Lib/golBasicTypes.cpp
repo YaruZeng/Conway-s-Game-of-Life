@@ -20,7 +20,8 @@
 
 namespace gol 
 {
-  
+  Status::Status(){}
+  Status::~Status(){}
   Status::Status(const int& rows, const int& columns)
   {
     m_rows = rows;

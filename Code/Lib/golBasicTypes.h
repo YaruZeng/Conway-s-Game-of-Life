@@ -49,6 +49,8 @@ namespace gol
   class Status
   {
     public:
+    Status();
+    ~Status();
     Status(const int& rows, const int& columns);
     Status(const int& rows, const int& columns, const int& num_alive);
     Status(const std::string& filename);

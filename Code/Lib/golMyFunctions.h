@@ -14,7 +14,10 @@
 
 #ifndef golMyFunctions_h
 #define golMyFunctions_h
-
+#include "golBasicTypes.h"
+#include <iostream>
+#include <string>
+#include <vector>
 /**
 * \file golMyFunctions.h
 * \brief Various Utilities.
@@ -22,11 +25,17 @@
 */
 namespace gol
 {
+  class GameofLife: public gol::Status
+  {
+    public:
+    GameofLife(const Status& s);
+    ~GameofLife();
+    void TakeStep();
+    void PrintGrid();
 
-/**
-* \brief My first function, adds two integers.
-*/
-int MyFirstAddFunction(int a, int b);
+    Status m_currstatus;
+
+  };
 
 } // end namespace
 
