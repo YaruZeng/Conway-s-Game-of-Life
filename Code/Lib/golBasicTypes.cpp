@@ -16,6 +16,7 @@
 #include <stdlib.h> 
 #include <time.h>  
 #include <fstream>
+#include <algorithm>
 
 namespace gol 
 {
@@ -114,23 +115,23 @@ namespace gol
   }
   
 
-  void Status::StatusSet(const int& rows, const int& columns, const std::string& status)
+  void Status::StatusSet(const int& row, const int& column, const std::string& status)
   {
     if(status=="alive"||"o")
     {
-      m_grid[rows][columns] = 1;
+      m_grid[row][column] = 1;
     }
     else if (status=="dead"||"-")
     {
-      m_grid[rows][columns] = 0;
+      m_grid[row][column] = 0;
     }
     
   }
 
 
-  std::string Status::StatusGet(const int& rows, const int& columns)
+  std::string Status::StatusGet(const int& row, const int& column)
   {
-    return m_grid[rows][columns] == 0 ? "-" : "o";
+    return m_grid[row][column] == 0 ? "-" : "o";
   }
 
 
@@ -146,6 +147,91 @@ namespace gol
       std::cout << '\n';
     }
     std::cout << std::endl;
+  }
+
+
+  int Status::NeighAlive(const int& row, const int& column)
+  {
+    int up = 0;
+    int down = 0;
+    int left = 0;
+    int right = 0;
+    int upleft = 0;
+    int upright = 0;
+    int downleft = 0;
+    int downright = 0;
+
+    int NeighAlive = 0;
+
+    if((row-1<0)&&(column-1<0))
+    {
+      down = m_grid[row+1][column] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      downright = m_grid[row+1][column+1] ==1? 1: 0;
+    }
+    else if((row-1<0)&&(column+1>=m_columns))
+    {
+      down = m_grid[row+1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+    }
+    else if(row-1<0)
+    {
+      down = m_grid[row+1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+      downright = m_grid[row+1][column+1] == 1? 1: 0;
+    }
+    else if((column-1<0)&&(row+1>=m_rows))
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      upright = m_grid[row-1][column+1] == 1? 1: 0;
+    }
+    else if(column-1<0)
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      down = m_grid[row+1][column] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      upright = m_grid[row-1][column+1] == 1? 1: 0;
+      downright = m_grid[row+1][column+1] == 1? 1: 0;
+    }
+    else if((row+1>=m_rows)&&(column+1>=m_columns))
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      upleft = m_grid[row-1][column-1] == 1? 1: 0;
+    }
+    else if(row+1>=m_rows)
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      upleft = m_grid[row-1][column-1] == 1? 1: 0;
+      upright = m_grid[row-1][column+1] == 1? 1: 0;
+    }
+    else if(column+1>=m_columns)
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      down = m_grid[row+1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      upleft = m_grid[row-1][column-1] == 1? 1: 0;
+      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+    }
+    else
+    {
+      up = m_grid[row-1][column] == 1? 1: 0;
+      down = m_grid[row+1][column] == 1? 1: 0;
+      left = m_grid[row][column-1] == 1? 1: 0;
+      right = m_grid[row][column+1] == 1? 1: 0;
+      upleft = m_grid[row-1][column-1] == 1? 1: 0;
+      upright = m_grid[row-1][column+1] == 1? 1: 0;
+      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+      downright = m_grid[row+1][column+1] == 1? 1: 0;
+    }
+    NeighAlive = up+down+left+right+upleft+upright+downleft+downright;
+    return NeighAlive;
   }
 
 } // end namespace

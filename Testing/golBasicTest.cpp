@@ -89,7 +89,6 @@ TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" ){
     
   }
 
-
   std::string filepath2 = "../testing/data/still_lifes.txt";
   std::ifstream infile2(filepath2);
   std::string str2; 
@@ -113,7 +112,6 @@ TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" ){
     
   }
   
-
   std::string filepath3 = "../testing/data/oscillators.txt";
   std::ifstream infile3(filepath3);
   std::string str3; 
@@ -139,11 +137,35 @@ TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" ){
 
 }
 
-// TEST_CASE( "My second test", "[some group identifier]" ) {
-//   std::vector<int> a;
-//   REQUIRE( a.size() == 0 );
-// }
+TEST_CASE( "Test for Class Method", "[Neighbouring Alive Count]" )
+{
+  gol::Status s1(5,5);
+  s1.StatusSet(2,4,"o");
+  s1.StatusSet(0,2,"o");
+  s1.StatusSet(4,4,"o");
+  s1.StatusSet(1,3,"o");
 
-// TEST_CASE( "Simple add", "[MyFirstAddFunction]") {
-//   REQUIRE( gol::MyFirstAddFunction(1, 2) == 3);
-// }
+  REQUIRE(s1.NeighAlive(0,0) == 0);
+  REQUIRE(s1.NeighAlive(0,4) == 1);
+  REQUIRE(s1.NeighAlive(4,0) == 0);
+  REQUIRE(s1.NeighAlive(4,4) == 0);
+  REQUIRE(s1.NeighAlive(0,1) == 1);
+  REQUIRE(s1.NeighAlive(3,0) == 0);
+  REQUIRE(s1.NeighAlive(4,1) == 0);
+  REQUIRE(s1.NeighAlive(1,4) == 2);
+  REQUIRE(s1.NeighAlive(2,3) == 2);
+
+  std::string filepath = "../testing/data/still_lifes.txt";
+  gol::Status s2(filepath);
+
+  REQUIRE(s2.NeighAlive(0,0) == 1);
+  REQUIRE(s2.NeighAlive(0,9) == 0);
+  REQUIRE(s2.NeighAlive(9,0) == 2);
+  REQUIRE(s2.NeighAlive(9,9) == 0);
+  REQUIRE(s2.NeighAlive(0,5) == 0);
+  REQUIRE(s2.NeighAlive(3,0) == 2);
+  REQUIRE(s2.NeighAlive(9,1) == 2);
+  REQUIRE(s2.NeighAlive(3,9) == 1);
+  REQUIRE(s2.NeighAlive(8,1) == 4);
+
+}
