@@ -5,8 +5,8 @@
 #include <utility>
 #include <stdlib.h>
 #include <unistd.h>
-#include "golBasicTypes.h"
-#include "golMyFunctions.h"
+#include "golStatus.h"
+#include "golGameofLife.h"
 
 static void show_usage(std::string name)
 {

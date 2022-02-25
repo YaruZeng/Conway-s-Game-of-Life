@@ -1,22 +1,10 @@
-/*=============================================================================
-
-  PHAS0100ASSIGNMENT1: PHAS0100 Assignment 1 Game of Life Simulation.
-
-  Copyright (c) University College London (UCL). All rights reserved.
-
-  This software is distributed WITHOUT ANY WARRANTY; without even
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-  PURPOSE.
-
-  See LICENSE.txt in the top level directory for details.
-
-=============================================================================*/
-#include "golBasicTypes.h"
+#include "golStatus.h"
 #include <random>
 #include <stdlib.h> 
 #include <time.h>  
 #include <fstream>
 #include <algorithm>
+#include <stdexcept>
 
 namespace gol 
 {
@@ -24,9 +12,13 @@ namespace gol
   Status::~Status(){}
   Status::Status(const int& rows, const int& columns)
   {
+    if((rows <= 1)||(columns <= 1)) 
+    {
+      throw std::logic_error("Rows and Columns should be ints larger than 1.");
+    }
+
     m_rows = rows;
     m_columns = columns;
-    
     std::vector<int> grid_rows;
     
     for(int i=0; i<m_columns; i++)
@@ -42,6 +34,11 @@ namespace gol
 
   Status::Status(const int& rows, const int& columns, const int& num_alive)
   {
+    if((rows <= 0)||(columns <= 0)) 
+    {
+      throw std::logic_error("Rows and Columns should be ints larger than 0.");
+    }
+
     m_rows = rows;
     m_columns = columns;
     std::vector<int> grid_rows;
@@ -118,6 +115,11 @@ namespace gol
 
   void Status::StatusSet(const int& row, const int& column, const std::string& status)
   {
+    if((row < 0)||(column < 0)) 
+    {
+      throw std::logic_error("Row and Column should be ints larger than or equal to 0.");
+    }
+
     if(status=="alive"||"o")
     {
       m_grid[row][column] = 1;
@@ -132,6 +134,11 @@ namespace gol
 
   std::string Status::StatusGet(const int& row, const int& column)
   {
+    if((row < 0)||(column < 0)) 
+    {
+      throw std::logic_error("Row and Column should be ints larger than or equal to 0.");
+    }
+
     return m_grid[row][column] == 0 ? "-" : "o";
   }
 
@@ -153,6 +160,11 @@ namespace gol
 
   int Status::NeighAlive(const int& row, const int& column)
   {
+    if((row < 0)||(column < 0)) 
+    {
+      throw std::logic_error("Row and Column should be ints larger than or equal to 0.");
+    }
+
     int up = 0;
     int down = 0;
     int left = 0;

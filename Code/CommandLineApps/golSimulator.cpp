@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
-#include "golBasicTypes.h"
-#include "golMyFunctions.h"
+#include "golStatus.h"
+#include "golGameofLife.h"
 
 static void show_usage(std::string name)
 {

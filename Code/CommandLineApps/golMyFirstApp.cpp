@@ -12,7 +12,7 @@
 
 =============================================================================*/
 
-#include <golMyFunctions.h>
+#include <golGameofLife.h>
 #include <golExceptionMacro.h>
 #include <iostream>
 
