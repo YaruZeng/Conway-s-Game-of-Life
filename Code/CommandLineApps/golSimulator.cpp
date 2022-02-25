@@ -5,7 +5,7 @@
 #include "golStatus.h"
 #include "golGameofLife.h"
 
-static void show_usage(std::string name)
+static void show_usage(std::string name) //Define a global function to print help message
 {
     std::cerr << "Usage: " << name << " <arguments(s)> SOURCES" << "\n"
               << "Get usage (optional):\n"
@@ -29,11 +29,11 @@ int main(int argc, char* argv[])
         show_usage(argv[0]);
         return 1;
     }
-    else if (argc == 5)
+    else if (argc == 5) //Run by specifying an input file
     {    
         std::string filepath="";
         int iter = 0;
-        for (int i = 1; i < argc; ++i) 
+        for (int i = 1; i < argc; ++i) //Check every arguments and store data input
         {
             std::string arg = argv[i];
             if ((arg == "-h") || (arg == "--help")) 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
             } 
             else if ((arg == "f") || (arg == "filepath")) 
             {
-                if (i + 1 < argc) 
+                if (i + 1 < argc) //Make sure this is not the last argument
                 {   
                     filepath = argv[++i];
                 } 
@@ -66,23 +66,23 @@ int main(int argc, char* argv[])
                 }
             }
         }
+        //Run Game of Life 
         gol::Status s(filepath);
         gol::GameofLife gof(s);
-        gof.PrintGrid();
         for(int i=0; i<iter; i++)
         {
             gof.TakeStep();
-            gof.PrintGrid();
         }
+        gof.PrintGrid();
         return 1;
     }
-    else if (argc == 9)
+    else if (argc == 9) //Run by starting with random cell contents
     {   
         int row = 0;
         int col = 0;
         int alive = 0;
         int iter_ran = 0;
-        for (int i = 1; i < argc; ++i)
+        for (int i = 1; i < argc; ++i) //Check every arguments and store data input
         {
             std::string arg = argv[i];
             if ((arg == "r") || (arg == "row")) 
@@ -135,15 +135,14 @@ int main(int argc, char* argv[])
             }
 
         }
-        
+        //Run Game of Life
         gol::Status s(row,col,alive);
         gol::GameofLife gof(s);
-        gof.PrintGrid();
         for(int i=0; i<iter_ran; i++)
         {
             gof.TakeStep();
-            gof.PrintGrid();
         }
+        gof.PrintGrid();
     }
     else
     {
