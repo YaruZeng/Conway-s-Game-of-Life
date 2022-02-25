@@ -72,8 +72,9 @@ int main(int argc, char* argv[])
         for(int i=0; i<iter; i++)
         {
             gof.TakeStep();
+            gof.PrintGrid();
         }
-        gof.PrintGrid();
+        
         return 1;
     }
     else if (argc == 9) //Run by starting with random cell contents
@@ -141,8 +142,9 @@ int main(int argc, char* argv[])
         for(int i=0; i<iter_ran; i++)
         {
             gof.TakeStep();
+            gof.PrintGrid();
         }
-        gof.PrintGrid();
+        
     }
     else
     {
