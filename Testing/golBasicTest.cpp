@@ -14,8 +14,8 @@
 
 #include "catch.hpp"
 #include "golCatchMain.h"
-#include "golMyFunctions.h"
-#include "golBasicTypes.h"
+#include "golGameofLife.h"
+#include "golStatus.h"
 #include <unistd.h>
 #include <iostream>
 #include <vector>
@@ -23,6 +23,16 @@
 
 TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) {
 
+  REQUIRE_NOTHROW(gol::Status(3,4));
+  REQUIRE_NOTHROW(gol::Status(4,4));
+  REQUIRE_THROWS(gol::Status(0,4));
+  REQUIRE_THROWS(gol::Status(3,0));
+  REQUIRE_THROWS(gol::Status(3,1));
+  REQUIRE_THROWS(gol::Status(1,3));
+  REQUIRE_THROWS(gol::Status(0,0));
+  REQUIRE_THROWS(gol::Status(1,1));
+  REQUIRE_THROWS(gol::Status(0,1));
+  
   gol::Status s1(6,5);
   REQUIRE(s1.m_rows==6);
   REQUIRE(s1.m_columns==5);
