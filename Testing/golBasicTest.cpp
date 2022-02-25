@@ -214,6 +214,7 @@ TEST_CASE( "Test for Method of class Status", "[Neighbouring Alive Count]" )
 
 TEST_CASE( "Test1 for Game of Life", "[TakeStep]" ) 
 {
+  //Set initial status of a grid
 
   gol::Status s1(5,5);
   s1.StatusSet(2,4,"o");
@@ -222,16 +223,9 @@ TEST_CASE( "Test1 for Game of Life", "[TakeStep]" )
   s1.StatusSet(1,3,"o");
   s1.StatusSet(0,0,"o");
   s1.StatusSet(3,3,"o");
-
-  std::vector<std::vector<int>> s1_result={}; 
-  s1_result.push_back(std::vector<int>{1,0,1,0,0});
-  s1_result.push_back(std::vector<int>{0,0,0,1,0});
-  s1_result.push_back(std::vector<int>{0,0,0,0,1});
-  s1_result.push_back(std::vector<int>{0,0,0,1,0});
-  s1_result.push_back(std::vector<int>{0,0,0,0,1});
-
   gol::GameofLife g1(s1);
-  REQUIRE(g1.m_currstatus.m_grid == s1_result);
+
+  //Test for result of the first iteration
 
   std::vector<std::vector<int>> s1_result_iter1={};
   s1_result_iter1.push_back(std::vector<int>{0,0,0,0,0});
@@ -243,6 +237,8 @@ TEST_CASE( "Test1 for Game of Life", "[TakeStep]" )
   g1.TakeStep();
   REQUIRE(g1.m_currstatus.m_grid == s1_result_iter1);
 
+  //Test for result of the second iteration
+
   std::vector<std::vector<int>> s1_result_iter2 = {};
   s1_result_iter2.push_back(std::vector<int>{0,0,0,0,0});
   s1_result_iter2.push_back(std::vector<int>{0,0,0,1,1});
@@ -252,6 +248,8 @@ TEST_CASE( "Test1 for Game of Life", "[TakeStep]" )
 
   g1.TakeStep();
   REQUIRE(g1.m_currstatus.m_grid == s1_result_iter2);
+
+  //Test for result of the third iteration
 
   std::vector<std::vector<int>> s1_result_iter3 = {};
   s1_result_iter3.push_back(std::vector<int>{0,0,0,0,0});

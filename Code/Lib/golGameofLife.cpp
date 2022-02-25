@@ -15,16 +15,16 @@ namespace gol
     {
       for(int j=0; j<m_currstatus.m_columns; j++)
       {
-        if((m_currstatus.StatusGet(i,j) == "-") && (m_currstatus.NeighAlive(i,j) == 3))
-        {
+        if((m_currstatus.StatusGet(i,j) == "-") && (m_currstatus.NeighAlive(i,j) == 3)) 
+        { //Check for rule 1
           m_nextstatus.m_grid[i][j] = 1;
         }
-        else if( (m_currstatus.StatusGet(i,j) == "o") && ((m_currstatus.NeighAlive(i,j) == 3) || (m_currstatus.NeighAlive(i,j) == 2)) )
-        {
+        else if( (m_currstatus.StatusGet(i,j) == "o") && ((m_currstatus.NeighAlive(i,j) == 3) || (m_currstatus.NeighAlive(i,j) == 2)) ) 
+        { //Check for rule 2
           m_nextstatus.m_grid[i][j] = 1;
         }
-        else if(m_currstatus.StatusGet(i,j) == "o")
-        {
+        else if(m_currstatus.StatusGet(i,j) == "o") 
+        { //Check for rule 3
           m_nextstatus.m_grid[i][j] = 0;
         }
         

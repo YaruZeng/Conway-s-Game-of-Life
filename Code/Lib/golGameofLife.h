@@ -7,7 +7,7 @@
 
 namespace gol
 {
-  class GameofLife: public gol::Status
+  class GameofLife: public gol::Status //Create Game of Life class
   {
     public:
     GameofLife(const Status& s);
