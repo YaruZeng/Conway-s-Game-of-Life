@@ -1,5 +1,7 @@
 # Build output
 build
+/.vscode
+/.devcontainer
 *.pyc
 *~
 # Mercurial:
