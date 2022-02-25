@@ -13,8 +13,8 @@ namespace gol
     Status();
     ~Status();
     Status(const int& rows, const int& columns); 
-    Status(const int& rows, const int& columns, const int& num_alive);
-    Status(const std::string& filename);
+    Status(const int& rows, const int& columns, const int& num_alive); //initialise the grid with random cell's status
+    Status(const std::string& filename); 
 
     void StatusSet(const int& row, const int& column, const std::string& status);
     std::string StatusGet(const int& row, const int& column);

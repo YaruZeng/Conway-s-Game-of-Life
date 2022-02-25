@@ -21,7 +21,9 @@
 #include <vector>
 #include <fstream>
 
-TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) {
+TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) 
+{
+  //Test class instantiation
 
   REQUIRE_NOTHROW(gol::Status(3,4));
   REQUIRE_NOTHROW(gol::Status(4,4));
@@ -33,6 +35,8 @@ TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) {
   REQUIRE_THROWS(gol::Status(1,1));
   REQUIRE_THROWS(gol::Status(0,1));
   
+  //Test class methods via 2 instances
+
   gol::Status s1(6,5);
   REQUIRE(s1.m_rows==6);
   REQUIRE(s1.m_columns==5);
@@ -51,7 +55,9 @@ TEST_CASE( "Test1 for instantiation of class Status", "[Defualt]" ) {
 
 }
 
-TEST_CASE( "Test2 for instantiation of class Status", "[Random]" ) {
+TEST_CASE( "Test2 for instantiation of class Status", "[Random]" ) 
+{
+  //Test total number of placed cells is correct
 
   gol::Status s1(5,5,5);
   REQUIRE(s1.m_rows==5);
@@ -65,16 +71,31 @@ TEST_CASE( "Test2 for instantiation of class Status", "[Random]" ) {
   REQUIRE(s2.m_columns==5);
   REQUIRE(s2.m_alive==5);
 
-  REQUIRE(s1.m_grid != s2.m_grid);
-
   gol::Status s3(6,7,5);
   REQUIRE(s3.m_rows==6);
   REQUIRE(s3.m_columns==7);
   REQUIRE(s3.m_alive==5);
+
+  //Test different instances generate different patterns of alive cells
+
+  REQUIRE(s1.m_grid != s2.m_grid);
+  REQUIRE(s1.m_grid != s3.m_grid);
+  REQUIRE(s2.m_grid != s3.m_grid);
+
+  //Test for instantiation failure
+
+  REQUIRE_THROWS(gol::Status(0,4));
+  REQUIRE_THROWS(gol::Status(3,0));
+  REQUIRE_THROWS(gol::Status(3,1));
+  REQUIRE_THROWS(gol::Status(1,3));
+  REQUIRE_THROWS(gol::Status(0,0));
+  REQUIRE_THROWS(gol::Status(1,1));
+  REQUIRE_THROWS(gol::Status(0,1));
   
 }
 
-TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" ){
+TEST_CASE( "Test3 for instantiation of class Status", "[File Input]" )
+{
 
   std::string filepath1 = "../testing/data/glider.txt";
   std::ifstream infile1(filepath1);
@@ -181,7 +202,8 @@ TEST_CASE( "Test for Method of class Status", "[Neighbouring Alive Count]" )
 }
 
 
-TEST_CASE( "Test1 for Game of Life", "[TakeStep]" ) {
+TEST_CASE( "Test1 for Game of Life", "[TakeStep]" ) 
+{
 
   gol::Status s1(5,5);
   s1.StatusSet(2,4,"o");
