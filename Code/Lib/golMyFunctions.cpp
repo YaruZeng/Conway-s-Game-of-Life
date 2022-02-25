@@ -50,7 +50,6 @@ namespace gol
 
   void GameofLife::PrintGrid()
   {
-    std::cout << "----------------------" << std::endl;
     m_currstatus.StatusPrint();
     std::cout << "----------------------" << std::endl;
   }
