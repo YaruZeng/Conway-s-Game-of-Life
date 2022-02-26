@@ -7,16 +7,15 @@
 
 namespace gol
 {
-  class GameofLife: public gol::Status //Create Game of Life class
+  class GameofLife : public gol::Status //Create Game of Life class
   {
-    public:
-    GameofLife(const Status& s);
+  public:
+    GameofLife(const Status &s);
     ~GameofLife();
     void TakeStep();
     void PrintGrid();
 
     Status m_currstatus;
-
   };
 
 } // end namespace

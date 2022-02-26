@@ -1,42 +1,41 @@
 #include "golStatus.h"
 #include <random>
-#include <stdlib.h> 
-#include <time.h>  
+#include <stdlib.h>
+#include <time.h>
 #include <fstream>
 #include <algorithm>
 #include <stdexcept>
 
-namespace gol 
+namespace gol
 {
-  Status::Status(){}
-  Status::~Status(){}
-  Status::Status(const int& rows, const int& columns)
+  Status::Status() {}
+  Status::~Status() {}
+  Status::Status(const int &rows, const int &columns)
   {
-    if((rows <= 1)||(columns <= 1)) //check validation of input data
+    if ((rows <= 1) || (columns <= 1)) //check validation of input data
     {
       throw std::logic_error("Rows and Columns should be ints larger than 1.");
     }
 
     m_rows = rows;
     m_columns = columns;
-    
+
     //Construct and store default grid status: all cells are dead
-    
+
     std::vector<int> grid_rows;
-    for(int i=0; i<m_columns; i++)
+    for (int i = 0; i < m_columns; i++)
     {
       grid_rows.push_back(0);
     }
-    for(int j=0; j<m_rows; j++)
+    for (int j = 0; j < m_rows; j++)
     {
       m_grid.push_back(grid_rows);
     }
   }
 
-
-  Status::Status(const int& rows, const int& columns, const int& num_alive)
+  Status::Status(const int &rows, const int &columns, const int &num_alive)
   {
-    if ((rows <= 0)||(columns <= 0)) //check validation of input data
+    if ((rows <= 0) || (columns <= 0)) //check validation of input data
     {
       throw std::logic_error("Rows and Columns should be ints larger than 0.");
     }
@@ -44,7 +43,7 @@ namespace gol
     {
       throw std::logic_error("Number of alive cells should be ints larger than 0.");
     }
-    else if (num_alive >= rows*columns)
+    else if (num_alive >= rows * columns)
     {
       throw std::logic_error("Number of alive cells less than the total number of cells(rows*columns).");
     }
@@ -54,43 +53,42 @@ namespace gol
     m_alive = num_alive;
 
     //Construct and store default grid status: all cells are dead
-    
+
     std::vector<int> grid_rows;
-    for(int i=0; i<m_columns; i++)
+    for (int i = 0; i < m_columns; i++)
     {
       grid_rows.push_back(0);
     }
-    for(int j=0; j<m_rows; j++)
+    for (int j = 0; j < m_rows; j++)
     {
       m_grid.push_back(grid_rows);
     }
 
     //Set m_alive alive cells randomly
 
-    int tol = m_columns*m_rows;
+    int tol = m_columns * m_rows;
     int alive_row = 0;
     int alive_column = 0;
     srand((unsigned)time(NULL));
     int count = 0;
 
-    while(count < m_alive)
+    while (count < m_alive)
     {
       alive_row = rand() % m_rows;
       alive_column = rand() % m_columns;
 
-      if(m_grid[alive_row][alive_column] == 1) continue; //avoid setting overlapped alive cells 
+      if (m_grid[alive_row][alive_column] == 1)
+        continue; //avoid setting overlapped alive cells
       m_grid[alive_row][alive_column] = 1;
       count++;
-
     }
   }
 
-
-  Status::Status(const std::string& filepath)
+  Status::Status(const std::string &filepath)
   {
     std::ifstream infile(filepath);
     std::string s;
-    
+
     if (!infile) //check validation of the filepath
     {
       throw std::logic_error("Failed to open the file. Please check the filepath.");
@@ -99,18 +97,18 @@ namespace gol
     {
       while (getline(infile, s)) //load data by lines
       {
-        std::vector<int> grid_rows={};
+        std::vector<int> grid_rows = {};
         int col_count = 0;
-        for(auto value:s)
+        for (auto value : s)
         {
           switch (value)
           {
-            case '-': 
+          case '-':
             grid_rows.push_back(0);
             ++col_count;
             break;
 
-            case 'o': 
+          case 'o':
             grid_rows.push_back(1);
             ++col_count;
             m_alive++;
@@ -123,48 +121,44 @@ namespace gol
       }
       infile.close();
     }
-
   }
-  
 
-  void Status::StatusSet(const int& row, const int& column, const std::string& status)
+  void Status::StatusSet(const int &row, const int &column, const std::string &status)
   {
-    if((row < 0)||(column < 0)) //check validation of input data
+    if ((row < 0) || (column < 0)) //check validation of input data
     {
       throw std::logic_error("Row and column indices should be ints larger than or equal to 0.");
     }
-    else if(row >= m_rows)
+    else if (row >= m_rows)
     {
       throw std::logic_error("Row and column indices should be ints less than total number of rows.");
     }
-    else if((column >= m_columns))
+    else if ((column >= m_columns))
     {
       throw std::logic_error("Row and column indices should be ints less than total number of columns.");
     }
 
-    if(status=="alive"||"o")
+    if (status == "alive" || "o")
     {
       m_grid[row][column] = 1;
     }
-    else if (status=="dead"||"-")
+    else if (status == "dead" || "-")
     {
       m_grid[row][column] = 0;
     }
-    
   }
 
-
-  std::string Status::StatusGet(const int& row, const int& column)
+  std::string Status::StatusGet(const int &row, const int &column)
   {
-    if((row < 0)||(column < 0)) //check validation of input data
+    if ((row < 0) || (column < 0)) //check validation of input data
     {
       throw std::logic_error("Row and column indices should be ints larger than or equal to 0.");
     }
-    else if(row >= m_rows)
+    else if (row >= m_rows)
     {
       throw std::logic_error("Row and column indices should be ints less than total number of rows.");
     }
-    else if((column >= m_columns))
+    else if ((column >= m_columns))
     {
       throw std::logic_error("Row and column indices should be ints less than total number of columns.");
     }
@@ -172,12 +166,11 @@ namespace gol
     return m_grid[row][column] == 0 ? "-" : "o";
   }
 
-
   void Status::StatusPrint()
   {
-    for(int i=0; i<m_rows; i++)
+    for (int i = 0; i < m_rows; i++)
     {
-      for(int j=0; j<m_columns; j++)
+      for (int j = 0; j < m_columns; j++)
       {
         std::string status = m_grid[i][j] == 0 ? "-" : "o";
         std::cout << status << ' ';
@@ -187,18 +180,17 @@ namespace gol
     std::cout << std::endl;
   }
 
-
-  int Status::NeighAlive(const int& row, const int& column)
+  int Status::NeighAlive(const int &row, const int &column)
   {
-    if((row < 0)||(column < 0)) //check validation of input data
+    if ((row < 0) || (column < 0)) //check validation of input data
     {
       throw std::logic_error("Row and column indices should be ints larger than or equal to 0.");
     }
-    else if(row >= m_rows)
+    else if (row >= m_rows)
     {
       throw std::logic_error("Row and column indices should be ints less than total number of rows.");
     }
-    else if((column >= m_columns))
+    else if ((column >= m_columns))
     {
       throw std::logic_error("Row and column indices should be ints less than total number of columns.");
     }
@@ -213,75 +205,75 @@ namespace gol
     int downleft = 0;
     int downright = 0;
 
-    if((row-1<0)&&(column-1<0)) //check if the assigned cell on the top left corner 
+    if ((row - 1 < 0) && (column - 1 < 0)) //check if the assigned cell on the top left corner
     {
-      down = m_grid[row+1][column] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      downright = m_grid[row+1][column+1] ==1? 1: 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      downright = m_grid[row + 1][column + 1] == 1 ? 1 : 0;
     }
-    else if((row-1<0)&&(column+1>=m_columns)) //check if the assigned cell on the top right corner
+    else if ((row - 1 < 0) && (column + 1 >= m_columns)) //check if the assigned cell on the top right corner
     {
-      down = m_grid[row+1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      downleft = m_grid[row + 1][column - 1] == 1 ? 1 : 0;
     }
-    else if(row-1<0) //check if the assigned cell on the top line except for top left corner
+    else if (row - 1 < 0) //check if the assigned cell on the top line except for top left corner
     {
-      down = m_grid[row+1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      downleft = m_grid[row+1][column-1] == 1? 1: 0;
-      downright = m_grid[row+1][column+1] == 1? 1: 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      downleft = m_grid[row + 1][column - 1] == 1 ? 1 : 0;
+      downright = m_grid[row + 1][column + 1] == 1 ? 1 : 0;
     }
-    else if((column-1<0)&&(row+1>=m_rows)) //check if the assigned cell on the bottom left corner
+    else if ((column - 1 < 0) && (row + 1 >= m_rows)) //check if the assigned cell on the bottom left corner
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      upright = m_grid[row-1][column+1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      upright = m_grid[row - 1][column + 1] == 1 ? 1 : 0;
     }
-    else if(column-1<0) //check if the assigned cell on the most left line except for two corners
+    else if (column - 1 < 0) //check if the assigned cell on the most left line except for two corners
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      down = m_grid[row+1][column] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      upright = m_grid[row-1][column+1] == 1? 1: 0;
-      downright = m_grid[row+1][column+1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      upright = m_grid[row - 1][column + 1] == 1 ? 1 : 0;
+      downright = m_grid[row + 1][column + 1] == 1 ? 1 : 0;
     }
-    else if((row+1>=m_rows)&&(column+1>=m_columns)) //check if the assigned cell on bottom right corner
+    else if ((row + 1 >= m_rows) && (column + 1 >= m_columns)) //check if the assigned cell on bottom right corner
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      upleft = m_grid[row-1][column-1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      upleft = m_grid[row - 1][column - 1] == 1 ? 1 : 0;
     }
-    else if(row+1>=m_rows) //check if the assigned cell on the bottom line except for two corners
+    else if (row + 1 >= m_rows) //check if the assigned cell on the bottom line except for two corners
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      upleft = m_grid[row-1][column-1] == 1? 1: 0;
-      upright = m_grid[row-1][column+1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      upleft = m_grid[row - 1][column - 1] == 1 ? 1 : 0;
+      upright = m_grid[row - 1][column + 1] == 1 ? 1 : 0;
     }
-    else if(column+1>=m_columns) //check if the assigned cell on the most right line except for two corners
+    else if (column + 1 >= m_columns) //check if the assigned cell on the most right line except for two corners
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      down = m_grid[row+1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      upleft = m_grid[row-1][column-1] == 1? 1: 0;
-      downleft = m_grid[row+1][column-1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      upleft = m_grid[row - 1][column - 1] == 1 ? 1 : 0;
+      downleft = m_grid[row + 1][column - 1] == 1 ? 1 : 0;
     }
     else //for cells not on the boundaries
     {
-      up = m_grid[row-1][column] == 1? 1: 0;
-      down = m_grid[row+1][column] == 1? 1: 0;
-      left = m_grid[row][column-1] == 1? 1: 0;
-      right = m_grid[row][column+1] == 1? 1: 0;
-      upleft = m_grid[row-1][column-1] == 1? 1: 0;
-      upright = m_grid[row-1][column+1] == 1? 1: 0;
-      downleft = m_grid[row+1][column-1] == 1? 1: 0;
-      downright = m_grid[row+1][column+1] == 1? 1: 0;
+      up = m_grid[row - 1][column] == 1 ? 1 : 0;
+      down = m_grid[row + 1][column] == 1 ? 1 : 0;
+      left = m_grid[row][column - 1] == 1 ? 1 : 0;
+      right = m_grid[row][column + 1] == 1 ? 1 : 0;
+      upleft = m_grid[row - 1][column - 1] == 1 ? 1 : 0;
+      upright = m_grid[row - 1][column + 1] == 1 ? 1 : 0;
+      downleft = m_grid[row + 1][column - 1] == 1 ? 1 : 0;
+      downright = m_grid[row + 1][column + 1] == 1 ? 1 : 0;
     }
-    
-    NeighAlive = up+down+left+right+upleft+upright+downleft+downright;
+
+    NeighAlive = up + down + left + right + upleft + upright + downleft + downright;
     return NeighAlive;
   }
 
