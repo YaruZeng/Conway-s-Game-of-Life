@@ -8,7 +8,7 @@
 #include "golStatus.h"
 #include "golGameofLife.h"
 
-static void show_usage(std::string name)
+static void show_usage(std::string name) //Define a global function to print help message
 {
     std::cerr << "Usage: " << name << " <arguments(s)> SOURCES" << "\n"
               << "Get usage (optional):\n"
@@ -29,13 +29,13 @@ int main(int argc, char* argv[])
         show_usage(argv[0]);
         return 1;
     }
-    else if ((argc == 8)||(argc == 9))
+    else if ((argc == 8)||(argc == 9)) 
     {   
         int row = 0;
         int col = 0;
         int alive = 0;
         int iter = 0;
-        for (int i = 1; i < argc; ++i)
+        for (int i = 1; i < argc; ++i) //Check every arguments and store data input
         {
             std::string arg = argv[i];
             if ((arg == "r") || (arg == "row")) 
@@ -88,12 +88,14 @@ int main(int argc, char* argv[])
             }
 
         }
+
+        //Begin searching for Still Life's
         
         int rand_cnt = 0;
         int rand_num = 500;
         std::vector<gol::Status> rand_grid = {};
         std::cout << "I'm finding..." << "\n";
-        while(rand_cnt < rand_num)
+        while(rand_cnt < rand_num) //Generate different random initial grids and store
         {   
             gol::Status status(row,col,alive);
 
@@ -114,19 +116,19 @@ int main(int argc, char* argv[])
 
         std::cout << "Number of searched random grids: " << rand_grid.size() << "\n";
         std::vector<gol::Status> still_life = {};
-        for (auto status:rand_grid)
+        for (auto status:rand_grid) // Run Game of Life for every grid and check out still lifes
         {   
             int still_iter = 0;
             std::vector<std::vector<int>> curr_status = {};
             std::vector<std::vector<int>> next_status = {};
             gol::GameofLife gof(status);
             
-            for(int i=0; i<iter; i++)
+            for(int i=0; i<iter; i++) //Run the assigned number of iterations for each configuration
             {
                 curr_status = gof.m_currstatus.m_grid;
                 gof.TakeStep();
                 next_status = gof.m_currstatus.m_grid;
-                if(curr_status == next_status)
+                if(curr_status == next_status) //Check out still lifes
                 {
                     ++still_iter;
                 }
@@ -140,7 +142,7 @@ int main(int argc, char* argv[])
 
         std::cout << "Number of found Still lifes: " <<  still_life.size() << "\n";
 
-        if(still_life.size() == 0)
+        if(still_life.size() == 0) //Print still lifes to the screen
         {
             std::cout << "Cannot find still lifes. " << std::endl;
         }

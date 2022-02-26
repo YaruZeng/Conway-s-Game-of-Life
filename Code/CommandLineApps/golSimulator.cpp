@@ -69,6 +69,7 @@ int main(int argc, char* argv[])
         //Run Game of Life 
         gol::Status s(filepath);
         gol::GameofLife gof(s);
+        gof.PrintGrid();
         for(int i=0; i<iter; i++)
         {
             gof.TakeStep();
@@ -139,6 +140,7 @@ int main(int argc, char* argv[])
         //Run Game of Life
         gol::Status s(row,col,alive);
         gol::GameofLife gof(s);
+        gof.PrintGrid();
         for(int i=0; i<iter_ran; i++)
         {
             gof.TakeStep();
