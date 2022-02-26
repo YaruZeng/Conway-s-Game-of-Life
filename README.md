@@ -38,7 +38,7 @@ make
 Use instructions
 ----------------
 
-After building, if you could find programs 'golBasicTest', 'golSimulation', 'golFindStillLife' under the directory of build, you can now test the project or run the Game of Life as instructions following.
+After building, if you could find programs 'golBasicTest', 'golSimulation', 'golFindStillLife' under the directory of build/bin, you can now test the project or run the Game of Life as instructions following.
 
 Run Tests:
 '''
@@ -84,8 +84,9 @@ cd PHAS0100Assignment1/build
 ./bin/golFindStillLife r ROM c COLUMN a ALIVE_NUM iter ITERATION_NUM
 '''
 
-Writeup on my PartC 9.d Result: 
+Writeup on my PartC 9.d Result
+------------------------------ 
 
-I can find 5 Still Life's in total by running the golFindStillLife program for a 4 by 4 grid of cells with the number of initial alive cells being 7 and 8 and 9. 
+I can find 10 Still Life's in total by running the golFindStillLife program for a 4 by 4 grid of cells with the number of initial alive cells being 4, 7, 8 and 9. 
 
 It is a small number but takes some time to get. The initial conditions of a grid is setted randomly. Finding a Still Life requires sufficient grids with different initial conditions searched. Therefore, if increase the number of different random grids searched by the program I will probably find more Still Life's. But subject to the limitation of system performance, it will cost more time.
