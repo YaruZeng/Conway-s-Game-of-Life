@@ -25,4 +25,67 @@ and [Dr. Matt Clarkson](https://iris.ucl.ac.uk/iris/browse/profile?upi=MJCLA42).
 Build Instructions
 ------------------
 
-Build and run instructions are left as an excercise for the student. Examples of how to build using cmake were given in lectures and in the other CMake example projects.
+If you want to test or use this project, it can be built by the following instructions. In Linux terms: 
+
+''' 
+mkdir PHAS0100Assignment1-build
+cd PHAS0100Assignment1-build
+cmake ..
+make
+'''
+
+
+Use instructions
+----------------
+
+After building, if you could find programs 'golBasicTest', 'golSimulation', 'golFindStillLife' under the directory of build, you can now test the project or run the Game of Life as instructions following.
+
+Run Tests:
+'''
+cd PHAS0100Assignment1/build
+./bin/golBasicTest
+'''
+
+Run Game of Life Simulation:
+
+-Check help messages:
+
+'''
+cd PHAS0100Assignment1/build
+./bin/golSimulation -h
+'''
+
+-Run Game of Life simulation by specifying an input txt file:
+
+'''
+cd PHAS0100Assignment1/build
+./bin/golSimulation f FILENAME iter ITERATION_NUM
+'''
+
+-Run Game of Life simulation by specifying conditions:
+
+'''
+cd PHAS0100Assignment1/build
+./bin/golSimulation r ROW c COLMUN a ALIVE_NUM iter ITERATION_NUM
+'''
+
+Find Still Life's:
+
+-Check help message:
+
+'''
+cd PHAS0100Assignment1/build
+./bin/golFindStillLife -h
+'''
+
+-Find Still Life's based on provided conditions:
+'''
+cd PHAS0100Assignment1/build
+./bin/golFindStillLife r ROM c COLUMN a ALIVE_NUM iter ITERATION_NUM
+'''
+
+Writeup on my PartC 9.d Result: 
+
+I can find 5 Still Life's in total by running the golFindStillLife program for a 4 by 4 grid of cells with the number of initial alive cells being 7 and 8 and 9. 
+
+It is a small number but takes some time to get. The initial conditions of a grid is setted randomly. Finding a Still Life requires sufficient grids with different initial conditions searched. Therefore, if increase the number of different random grids searched by the program I will probably find more Still Life's. But subject to the limitation of system performance, it will cost more time.
