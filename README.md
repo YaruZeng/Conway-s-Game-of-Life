@@ -27,12 +27,12 @@ Build Instructions
 
 If you want to test or use this project, it can be built by the following instructions. In Linux terms: 
 
-''' 
+```
 mkdir PHAS0100Assignment1-build
 cd PHAS0100Assignment1-build
 cmake ..
 make
-'''
+```
 
 
 Use instructions
@@ -41,48 +41,48 @@ Use instructions
 After building, if you could find programs 'golBasicTest', 'golSimulation', 'golFindStillLife' under the directory of build/bin, you can now test the project or run the Game of Life as instructions following.
 
 Run Tests:
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golBasicTest
-'''
+```
 
 Run Game of Life Simulation:
 
 -Check help messages:
 
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golSimulation -h
-'''
+```
 
 -Run Game of Life simulation by specifying an input txt file:
 
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golSimulation f FILENAME iter ITERATION_NUM
-'''
+```
 
 -Run Game of Life simulation by specifying conditions:
 
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golSimulation r ROW c COLMUN a ALIVE_NUM iter ITERATION_NUM
-'''
+```
 
 Find Still Life's:
 
 -Check help message:
 
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golFindStillLife -h
-'''
+```
 
 -Find Still Life's based on provided conditions:
-'''
+```
 cd PHAS0100Assignment1/build
 ./bin/golFindStillLife r ROM c COLUMN a ALIVE_NUM iter ITERATION_NUM
-'''
+```
 
 Writeup on my PartC 9.d Result
 ------------------------------ 
